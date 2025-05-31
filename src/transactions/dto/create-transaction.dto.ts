@@ -1,7 +1,27 @@
+import { IsNumber, IsEnum, IsInt, IsOptional, IsDateString, Min, IsString, IsNotEmpty } from 'class-validator';
+
+export enum TransactionType {
+  INCOME = 'income',
+  EXPENSE = 'expense',
+}
+
 export class CreateTransactionDto {
+  @IsNumber()
+  @Min(0)
   amount: number;
-  type: 'income' | 'expense';
+
+  @IsEnum(TransactionType)
+  type: TransactionType;
+
+  @IsInt()
+  @Min(1)
   categoryId: number;
-  transactionDate: Date;
+
+  @IsDateString()
+  transactionDate: string;
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
   note?: string;
 }
